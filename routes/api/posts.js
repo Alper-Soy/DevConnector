@@ -29,4 +29,14 @@ router.get('/:id', auth, postController.getPost);
 // @access   Private
 router.delete('/:id', auth, postController.deletePost);
 
+// @route    PUT api/posts/like/:id
+// @desc     Like a post
+// @access   Private
+router.put('/like/:id', auth, postController.putLikePost);
+
+// @route    PUT api/posts/unlike/:id
+// @desc     Unlike a post
+// @access   Private
+router.put('/unlike/:id', auth, postController.putUnlikePost);
+
 module.exports = router;
