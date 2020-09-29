@@ -43,21 +43,24 @@ exports.postCreateProfile = async (req, res) => {
 
   const profileFields = {
     user: req.user.id,
-    company: company ? company : '',
-    website: website ? website : '',
-    location: location ? location : '',
-    bio: bio ? bio : '',
-    status: status ? status : '',
-    githubusername: githubusername ? githubusername : '',
-    skills,
-    social: {
-      youtube: youtube ? youtube : '',
-      twitter: twitter ? twitter : '',
-      instagram: instagram ? instagram : '',
-      linkedin: linkedin ? linkedin : '',
-      facebook: facebook ? facebook : '',
-    },
   };
+
+  if (company) profileFields.company = company;
+  if (website) profileFields.website = website;
+  if (location) profileFields.location = location;
+  if (bio) profileFields.bio = bio;
+  if (status) profileFields.status = status;
+  if (githubusername) profileFields.githubusername = githubusername;
+  if (skills) {
+    profileFields.skills = skills.split(',').map((skill) => skill.trim());
+  }
+
+  profileFields.social = {};
+  if (youtube) profileFields.social.youtube = youtube;
+  if (twitter) profileFields.social.twitter = twitter;
+  if (instagram) profileFields.social.instagram = instagram;
+  if (linkedin) profileFields.social.linkedin = linkedin;
+  if (facebook) profileFields.social.facebook = facebook;
 
   try {
     let profile = await Profile.findOne({ user: req.user.id });
